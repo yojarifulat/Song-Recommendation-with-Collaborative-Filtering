@@ -1,0 +1,20 @@
+import numpy as np
+from scipy.sparse import lil_matrix
+from sklearn.metrics.pairwise import cosine_similarity
+
+# Load the user-song rating matrix
+ratings = load_user_song_ratings()
+
+# Perform item-based collaborative filtering
+similarities = cosine_similarity(ratings.T)
+
+# Generate recommendations for a user
+user_id = 1
+user_ratings = ratings[user_id, :]
+predicted_ratings = np.dot(similarities, user_ratings)
+
+# Sort the predicted ratings in descending order
+sorted_indices = np.argsort(predicted_ratings)[::-1]
+recommended_songs = sorted_indices[:10]
+
+print("Recommended songs:", recommended_songs)
